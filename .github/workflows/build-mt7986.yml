@@ -11,8 +11,8 @@ jobs:
 
     env:
       TARGET: mediatek
-      SUBTARGET: mt7986
-      PROFILE: RE-CS-05  # 你设备的 profile，可修改
+      SUBTARGET: mediatek_filogic
+      PROFILE: jdcloud_re-cp-03  # 你设备的 profile，可修改
 
     steps:
       - name: Checkout repository
