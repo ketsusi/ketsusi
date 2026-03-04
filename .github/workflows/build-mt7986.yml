@@ -1,0 +1,57 @@
+name: Build ImmortalWrt MT7986
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      TARGET: mediatek
+      SUBTARGET: mt7986
+      PROFILE: RE-CS-05  # 你设备的 profile，可修改
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential libncurses5-dev gawk git ccache unzip \
+              file subversion wget python3-distutils python3-setuptools python3-dev \
+              libssl-dev xsltproc zlib1g-dev
+
+      - name: Clone ImmortalWrt MT798x source
+        run: |
+          git clone -b openwrt-24.10-6.6 --single-branch --filter=blob:none \
+              https://github.com/padavanonly/immortalwrt-mt798x-24.10 openwrt-src
+
+      - name: Update and install feeds
+        run: |
+          cd openwrt-src
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Generate default config for MT7986
+        run: |
+          cd openwrt-src
+          make defconfig
+          # 自动选择目标和 profile
+          scripts/feeds install -a
+          # 可以在这里添加你想要的软件包
+          # 例如 LuCI、wireless 工具等
+
+      - name: Compile ImmortalWrt
+        run: |
+          cd openwrt-src
+          make -j$(nproc)
+
+      - name: Upload compiled firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: immortalwrt-firmware
+          path: openwrt-src/bin/targets/${{ env.TARGET }}/${{ env.SUBTARGET }}/
