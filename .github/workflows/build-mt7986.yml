@@ -52,8 +52,7 @@ jobs:
       - name: Compile ImmortalWrt
         run: |
           cd openwrt-src
-          make -j$(nproc)
-
+          make -j1 Vs
       - name: Upload compiled firmware
         uses: actions/upload-artifact@v4
         with:
