@@ -12,7 +12,7 @@ jobs:
     env:
       TARGET: mediatek
       SUBTARGET: mediatek_filogic
-      PROFILE: jdcloud_re-cp-03  # 你设备的 profile，可修改
+      PROFILE: jdcloud_re-cp-03  # 根据你的设备修改
 
     steps:
       - name: Checkout repository
@@ -31,7 +31,7 @@ jobs:
             patch pkgconf python3 python3-pip python3-ply python3-docutils python3-pyelftools \
             qemu-utils re2c rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl \
             unzip vim wget xmlto xxd zlib1g-dev zstd
-          
+
       - name: Clone ImmortalWrt MT798x source
         run: |
           git clone -b openwrt-24.10-6.6 --single-branch --filter=blob:none \
@@ -43,15 +43,12 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Generate default config for MT7986
+      - name: Copy custom config
         run: |
+          cp .config openwrt-src/.config
           cd openwrt-src
-          cp -f defconfig/mt7986-ax6000.config .config
-          # make defconfig
-          # 自动选择目标和 profile
-          # scripts/feeds install -a
-          # 可以在这里添加你想要的软件包
-          # 例如 LuCI、wireless 工具等
+          # 确保配置生效，生成依赖
+          make defconfig
 
       - name: Compile ImmortalWrt
         run: |
