@@ -45,9 +45,11 @@ jobs:
 
       - name: Copy custom config
         run: |
-          $GITHUB_WORKSPACE/Scripts/Handles.sh
-          cp .github/workflows/.config openwrt-src/.config
+          chmod +x $GITHUB_WORKSPACE/.github/workflows/Scripts/Handles.sh
           cd openwrt-src
+          bash $GITHUB_WORKSPACE/.github/workflows/Scripts/Handles.sh
+
+          cp $GITHUB_WORKSPACE/.github/workflows/.config .config
           make defconfig
 
       - name: Compile ImmortalWrt
