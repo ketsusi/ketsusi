@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PKG_PATH="$GITHUB_WORKSPACE/wrt/package/"
+PKG_PATH="$GITHUB_WORKSPACE/openwrt-src/package/"
 
 #修复Rust编译失败
 RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
