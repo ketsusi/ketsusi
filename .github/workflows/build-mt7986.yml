@@ -45,6 +45,7 @@ jobs:
 
       - name: Copy custom config
         run: |
+          $GITHUB_WORKSPACE/Scripts/Handles.sh
           cp .github/workflows/.config openwrt-src/.config
           cd openwrt-src
           make defconfig
