@@ -40,6 +40,8 @@ jobs:
       - name: Update and install feeds
         run: |
           cd openwrt-src
+          mkdir -p ./feeds/luci/applications
+          cp -a $GITHUB_WORKSPACE/.github/workflows/packages/. ./feeds/luci/applications/
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
