@@ -53,14 +53,7 @@ jobs:
 
           cp $GITHUB_WORKSPACE/.github/workflows/.config .config
           make defconfig
-
-      # =========================
-      # 新增 SSH 调试步骤（tmate）
-      - name: SSH debug (tmate)
-        uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
-          
+       
       - name: Compile ImmortalWrt
         run: |
           cd openwrt-src
