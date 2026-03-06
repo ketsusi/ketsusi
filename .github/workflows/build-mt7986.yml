@@ -60,4 +60,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: immortalwrt-firmware
-          path: openwrt-src/bin/targets/${{ env.TARGET }}/${{ env.SUBTARGET }}/
+          path: openwrt-src/bin/targets/mediatek/filogic/
