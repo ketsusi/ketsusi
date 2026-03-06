@@ -61,5 +61,5 @@ jobs:
       - name: Upload compiled firmware
         uses: actions/upload-artifact@v4
         with:
-          name: immortalwrt-firmware
+          name: immortalwrt-mt7986
           path: openwrt-src/bin/targets/mediatek/filogic/
