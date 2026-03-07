@@ -1,5 +1,8 @@
 name: Build ImmortalWrt MT7986
 
+permissions:
+  contents: write
+  
 on:
   push:
     branches: [ main ]
@@ -58,8 +61,19 @@ jobs:
         run: |
           cd openwrt-src
           make -j$(nproc) V=s
+          
       - name: Upload compiled firmware
         uses: actions/upload-artifact@v4
         with:
           name: immortalwrt-mt7986
           path: openwrt-src/bin/targets/mediatek/filogic/
+
+      - name: Upload firmware to Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: openwrt-${{ github.run_number }}
+          name: OpenWrt Build ${{ github.run_number }}
+          files: |
+            openwrt/bin/targets/*/*/*.bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
