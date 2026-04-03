@@ -1,4 +1,4 @@
-name: Build ImmortalWrt MT7986
+name: Build ImmortalWrt MT7981 AX3000T
 
 permissions:
   contents: write
