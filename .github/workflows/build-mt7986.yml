@@ -39,6 +39,7 @@ jobs:
       - name: Copy custom config
         run: |
           cd openwrt-src
+          cp -f defconfig/mt7981-ax3000.config .config
           cp $GITHUB_WORKSPACE/.github/workflows/.config .config
           make defconfig
        
