@@ -42,7 +42,17 @@ jobs:
           cp -f defconfig/mt7981-ax3000.config .config
           cp $GITHUB_WORKSPACE/.github/workflows/.config .config
           make defconfig
-       
+          
+      - name: Fix libffi Makefile path
+        run: |
+          cd openwrt-src
+          if [ -f feeds/packages/libs/libffi/Makefile ]; then
+            sed -i 's/\$(GNU_TARGET_NAME)\*\/fficonfig.h/\*\/fficonfig.h/g' feeds/packages/libs/libffi/Makefile
+            echo "libffi Makefile fixed."
+          else
+            echo "Warning: libffi Makefile not found, skipping fix."
+          fi
+          
       - name: Compile ImmortalWrt
         run: |
           cd openwrt-src
